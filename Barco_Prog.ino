@@ -1,6 +1,13 @@
 #include <Ultrasonic.h>
 #include <MPU6050_tockn.h>
 #include <Wire.h>
+/*
+AS PORTAS DO SENSOR MPU6050
+VCC = 5V
+GND = GND
+SCL = A5
+SDA = A4
+*/
 
 //motor A
 int IN1 = 2;
@@ -14,16 +21,16 @@ int IN4 = 5;
 int V = 110;
 
 // DEFINIÇÕES
+//#define MPU6050_ADDR 0x68  // ENDEREÇO QUANDO O PINO AD0 ESTIVER LIGADO AO GND
+#define MPU6050_ADDR         0x69 // ENDEREÇO QUANDO O PINO AD0 ESTIVER LIGADO AO VCC
 #define DEBUG
-#define MPU6050_ADDR 0x68  // ENDEREÇO QUANDO O PINO AD0 ESTIVER LIGADO AO GND
-//#define MPU6050_ADDR         0x69 // ENDEREÇO QUANDO O PINO AD0 ESTIVER LIGADO AO VCC
-
 // INSTANCIANDO OBJETOS
 MPU6050 mpu6050(Wire);
 Ultrasonic ultrasonicF (9, 10);
 Ultrasonic ultrasonicT (12, 13);
 
 // DECLARAÇÃO DE VARIÁVEIS
+unsigned long controleTempo;
 bool controle = false;
 float anguloZ;
 
@@ -41,10 +48,12 @@ void setup() {
   Serial.begin(9600);
   Wire.begin();
   mpu6050.begin();
-  mpu6050.calcGyroOffsets(false);  // MUDAR PARA "true" SE QUISER VISUALIZAR INFORMAÇÕES DE CALIBRAÇÃO NO MONITOR SERIAL
+  mpu6050.calcGyroOffsets(true);  // MUDAR PARA "true" SE QUISER VISUALIZAR INFORMAÇÕES DE CALIBRAÇÃO NO MONITOR SERIAL
+
 #ifdef DEBUG
   Serial.println("Fim Setup");
 #endif
+
   pinMode(IN1, OUTPUT);
   pinMode(IN2, OUTPUT);
   pinMode(IN3, OUTPUT);
@@ -59,19 +68,25 @@ void loop() {
   
   //VOIDS
   ultra();
-  media();
-  giroF();
-  giroT();
+  if(controle == false){
+    giroF();
+  }
 
-  
-  Serial.print(mediaDistanciaT);
-  Serial.print(" -|- ");
-  Serial.println(mediaDistanciaF);
-  delay(500);
+  // Serial.println(anguloZ);
+  // delay(200);
+
+  // moverFrente(V);
+  // moverTras(V);
+  // pararMotor(V);
+
+  // Serial.print(mediaDistanciaT);
+  // Serial.print(" -|- ");
+  // Serial.println(mediaDistanciaF);
+  // delay(500);
 
   // Serial.print(distanciaT);
   // Serial.print(" -|- ");
-  //Serial.println(distanciaF);
-  //delay(500);
+  // Serial.println(distanciaF);
+  // delay(500);
 
 }

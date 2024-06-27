@@ -1,9 +1,9 @@
 void moverDireita(unsigned char V)
 {
  digitalWrite(IN1,LOW);
- digitalWrite(IN2,V+80);
+ digitalWrite(IN2,V);
  digitalWrite(IN3,LOW);
- digitalWrite(IN4,V-80);
+ digitalWrite(IN4,V-50);
 } 
 
 void moverEsquerda(unsigned char V)
@@ -11,7 +11,7 @@ void moverEsquerda(unsigned char V)
  digitalWrite(IN1,LOW);
  digitalWrite(IN2,V-80);
  digitalWrite(IN3,LOW);
- digitalWrite(IN4,V+80);
+ digitalWrite(IN4,V);
 } 
 void moverFrente(unsigned char V)
 {

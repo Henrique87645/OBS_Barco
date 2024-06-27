@@ -2,19 +2,20 @@ void giroF(){
   anguloZ = mpu6050.getAngleZ();
   
   // VERIFICA SE GIROU NO EIXO Z
-  if (anguloZ >= 50){
-    moverEsquerda(V);
-    Serial.println("Correção esq frente");
-    delay(800);  
-  }
-  if (anguloZ <= -50){
-    moverDireita(V);
-    Serial.println("Correção dir frente");
-    delay(800);
-  } else {
+  if (anguloZ >= 25){
+    Serial.println("Correção frente na rota para a direita...");
+      moverDireita(V);
+      delay(200);
+    
+  } if (anguloZ <= -25){
+    Serial.println("Correção frente na rota para a esquerda...");
+      moverEsquerda(V);
+      delay(200);
+    
+  } if ((anguloZ < 24) && (anguloZ > -24)) {
+    Serial.println("Nada detectado em frente...");
     moverFrente(V);
-    Serial.println("tudo ok frente");
-    delay(800);
+    delay(200);
   }
 }
 
@@ -23,18 +24,19 @@ void giroT(){
   anguloZ = mpu6050.getAngleZ();
   
   // VERIFICA SE GIROU NO EIXO Z
-  if (anguloZ <= -50){
-    moverEsquerda(V);
-    Serial.println("Correção esq tras");
-    delay(800);
-  }
-  if (anguloZ >= +50){
-    moverDireita(V);
-    Serial.println("Correção dir tras");
-    delay(800);
-  } else {
-    moverTras(V);
-    Serial.println("tudo ok tras");
-    delay(800);
+  if (anguloZ >= 25){
+    Serial.println("Correção tras na rota para a esquerda...");
+      moverEsquerda(V);
+      delay(200);
+
+  } if (anguloZ <= -25){
+    Serial.println("Correção tras na rota para a direita...");
+      moverDireita(V);
+      delay(200);
+
+  } if ((anguloZ < 24) && (anguloZ > -24)) {
+    Serial.println("Nada detectado à tras...");
+    moverFrente(V);
+    delay(200);
   }
 }
